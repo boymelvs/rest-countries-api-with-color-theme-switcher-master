@@ -172,7 +172,7 @@ const imListening = (countries, eachItem) => {
 
             setTimeout(() => {
                insertMultipleCards(allCountrydata, 32);
-            }, 300);
+            }, 700);
 
             getBackBtn("hide");
             getSearchContainer("show");
