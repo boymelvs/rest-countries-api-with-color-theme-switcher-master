@@ -1,13 +1,16 @@
 "use strict";
 
 /* theme switch */
-const getTheme = document.querySelector(".theme_select");
+const getTheme = (show) => {
+   document.querySelector(".theme_select").style.display = show == "show" ? "flex" : "none";
+   return document.querySelector(".theme_select");
+};
 
 const getAllDarkModes = () => {
    return document.querySelectorAll(".dark_mode");
 };
 
-getTheme.addEventListener("click", () => {
+getTheme().addEventListener("click", () => {
    getAllDarkModes().forEach((darkMode) => {
       darkMode.classList.toggle("active");
    });
@@ -177,7 +180,7 @@ const imListening = (countries, eachItem) => {
             getCardContainer().innerHTML = getLoading();
 
             setTimeout(() => {
-               insertMultipleCards(allCountrydata, 32);
+               createPagination(allCountrydata, 0);
             }, 700);
 
             getBackBtn("hide");
@@ -379,6 +382,7 @@ const getUrl = "https://restcountries.com/v3.1/all";
 // const getUrl = "../data/data.json";
 const getAllCountryData = async () => {
    getCardContainer().innerHTML = getLoading();
+   getTheme("hide");
 
    try {
       const res = await fetch(getUrl);
@@ -393,6 +397,7 @@ const getAllCountryData = async () => {
       getSearchCountry(sorted);
       getByRegion(sorted);
       allCountrydata = sorted;
+      getTheme("show");
    } catch (error) {
       console.log("Error", error);
       getCardContainer().innerHTML = `<div class="not_found">
