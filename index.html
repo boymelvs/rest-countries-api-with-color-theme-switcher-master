@@ -1,96 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="this is a solution to rest countries api with theme switcher challenge from frontend mentor" />
+      <meta name="keyword" content="html, api, css, flexbox, grid" />
+      <meta name="author" content="melvin" />
 
-<head>
-   <meta charset="UTF-8" />
-   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <meta name="description"
-      content="this is a solution to rest countries api with theme switcher challenge from frontend mentor" />
-   <meta name="keyword" content="html, api, css, flexbox, grid" />
-   <meta name="author" content="melvin" />
+      <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+      <link rel="stylesheet" href="./styles/styles.css" />
+      <title>Where in the world?</title>
+   </head>
 
-   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
-   <link rel="stylesheet" href="./styles/styles.css" />
-   <title>Where in the world?</title>
-</head>
+   <body class="dark_mode">
+      <div class="container">
+         <header class="header">
+            <nav class="nav_bar">
+               <h1 class="title">Where in the world?</h1>
 
-<body class="dark_mode">
-   <div class="container">
-      <header class="header">
-         <nav class="nav_bar">
-            <h1 class="title">Where in the world?</h1>
+               <input type="checkbox" name="theme_checkbox" id="theme_checkbox" class="theme_checkbox" aria-label="theme checkbox" />
 
-            <input type="checkbox" name="theme_checkbox" id="theme_checkbox" class="theme_checkbox"
-               aria-label="theme checkbox" />
+               <div class="theme_select">
+                  <div class="theme_icon">
+                     <label for="theme_checkbox">
+                        <img src="./images/sun/icons8-sun-96.png" alt="Sun" class="sun dark_mode" />
 
-            <div class="theme_select">
-               <div class="theme_icon">
-                  <label for="theme_checkbox">
-                     <img src="./images/sun/icons8-sun-96.png" alt="Sun" class="sun dark_mode" />
+                        <img src="./images/moon/icons8-moon-symbol-90.png" alt="Moon" class="moon dark_mode" />
+                     </label>
+                  </div>
 
-                     <img src="./images/moon/icons8-moon-symbol-90.png" alt="Moon" class="moon dark_mode" />
-                  </label>
+                  <div class="mode">
+                     <label for="theme_checkbox">
+                        <span class="dark dark_mode">Dark Mode</span>
+                        <span class="light dark_mode">Light Mode</span>
+                     </label>
+                  </div>
+               </div>
+            </nav>
+         </header>
+
+         <main class="main_content">
+            <div class="filter_container">
+               <div class="search_container">
+                  <input type="search" id="search" class="search dark_mode" placeholder="Search for a country..." aria-label="search" />
                </div>
 
-               <div class="mode">
-                  <label for="theme_checkbox">
-                     <span class="dark dark_mode">Dark Mode</span>
-                     <span class="light dark_mode">Light Mode</span>
+               <div class="back_btn_container">
+                  <button type="button" class="back_btn dark_mode" aria-label="back button">
+                     <span> Back </span>
+                  </button>
+               </div>
+
+               <div class="filter_region_container">
+                  <input type="checkbox" id="checkbox" class="checkbox" />
+
+                  <label for="checkbox" class="filter_region dark_mode">
+                     <span> Filter by Region </span>
+                     <span class="arrow dark_mode"></span>
                   </label>
+
+                  <ul class="dropdown dark_mode">
+                     <li class="dropdown_menu africa"><a href="#africa" class="dark_mode"> Africa </a></li>
+                     <li class="dropdown_menu americas"><a href="#america" class="dark_mode"> Americas </a></li>
+                     <li class="dropdown_menu asia"><a href="#asia" class="dark_mode"> Asia </a></li>
+                     <li class="dropdown_menu europe"><a href="#europe" class="dark_mode"> Europe </a></li>
+                     <li class="dropdown_menu oceania"><a href="#oceania" class="dark_mode"> Oceania </a></li>
+                  </ul>
                </div>
             </div>
-         </nav>
-      </header>
 
-      <main class="main_content">
-         <div class="filter_container">
-            <div class="search_container">
-               <input type="search" id="search" class="search dark_mode" placeholder="Search for a country..."
-                  aria-label="search" />
+            <div class="card_container dark_mode"></div>
+
+            <div class="pagination">
+               <ul class="page_container"></ul>
             </div>
+         </main>
 
-            <div class="back_btn_container">
-               <button type="button" class="back_btn dark_mode" aria-label="back button">
-                  <span> Back </span>
-               </button>
-            </div>
-
-            <div class="filter_region_container">
-               <input type="checkbox" id="checkbox" class="checkbox" />
-
-               <label for="checkbox" class="filter_region dark_mode">
-                  <span> Filter by Region </span>
-                  <span class="arrow dark_mode"></span>
-               </label>
-
-               <ul class="dropdown dark_mode">
-                  <li><a href="#africa" class="dark_mode dropdown_menu" name="africa"> Africa </a></li>
-                  <li><a href="#america" class="dark_mode dropdown_menu" name="americas"> Americas </a></li>
-                  <li><a href="#asia" class="dark_mode dropdown_menu" name="asia"> Asia </a></li>
-                  <li><a href="#europe" class="dark_mode dropdown_menu" name="europe"> Europe </a></li>
-                  <li><a href="#oceania" class="dark_mode dropdown_menu" name="oceania"> Oceania </a></li>
-               </ul>
-            </div>
-         </div>
-
-         <div class="card_container dark_mode">
-
-         </div>
-
-         <div class="pagination">
-            <ul class="page_container"> </ul>
-         </div>
-
-      </main>
-
-      <footer class="attribution">
-         Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-            rel="noreferrer noopener">Frontend Mentor</a>. Coded by
-         <a href="https://github.com/boymelvs" target="_blank" rel="noreferrer noopener">boymelvs</a>.
-      </footer>
-   </div>
-   <script src="./scripts/index.js"></script>
-</body>
-
+         <footer class="attribution">
+            Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank" rel="noreferrer noopener">Frontend Mentor</a>. Coded by
+            <a href="https://github.com/boymelvs" target="_blank" rel="noreferrer noopener">boymelvs</a>.
+         </footer>
+      </div>
+      <script src="./scripts/index.js"></script>
+   </body>
 </html>

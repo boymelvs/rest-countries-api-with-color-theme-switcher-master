@@ -38,7 +38,7 @@ const getCards = () => {
 
 /* location of all pagination, show/hide purposes */
 const getPaginationContainer = (show) => {
-   document.querySelector(".pagination").style.display = show;
+   document.querySelector(".pagination").style.display = show == "show" ? "block" : "none";
 };
 
 /* location where pagination to be inserted */
@@ -63,13 +63,13 @@ const getBorderNames = () => {
 
 /* clickable purposes */
 const getBackBtn = (show) => {
-   document.querySelector(".back_btn_container").style.display = show;
+   document.querySelector(".back_btn_container").style.display = show == "show" ? "block" : "none";
    return document.querySelector(".back_btn_container");
 };
 
 /* show/hide purposes */
 const getSearchContainer = (show) => {
-   document.querySelector(".search_container").style.display = show;
+   document.querySelector(".search_container").style.display = show == "show" ? "flex" : "none";
    return document.querySelector(".search_container");
 };
 
@@ -79,12 +79,12 @@ const getSearch = () => {
 
 /* show/hide purposes */
 const getFilterRegion = (show) => {
-   document.querySelector(".filter_region_container").style.display = show;
+   document.querySelector(".filter_region_container").style.display = show == "show" ? "flex" : "none";
    return document.querySelector(".filter_region_container");
 };
 
 const getDropdowns = () => {
-   return document.querySelectorAll(".dropdown_menu");
+   return document.querySelectorAll(".dropdown li");
 };
 
 /* function that create per page btn */
@@ -130,36 +130,53 @@ const imListening = (countries, eachItem) => {
    eachItem.forEach((item, countryKey) => {
       item.addEventListener("click", (e) => {
          if (item.classList.contains("page")) {
-            createPagination(countries, countryKey);
+            getCardContainer().innerHTML = getLoading();
+
+            setTimeout(() => {
+               createPagination(countries, countryKey);
+            }, 300);
          }
 
          if (item.classList.contains("card")) {
-            // insertSingleCard(countries, countryKey);
-            insertSingleCard(countries[countryKey]);
+            getCardContainer().innerHTML = getLoading();
+
+            setTimeout(() => {
+               insertSingleCard(countries[countryKey]);
+            }, 300);
          }
 
          if (item.classList.contains("dropdown_menu")) {
-            const searchRegion = e.target.name;
-
+            getCardContainer().innerHTML = getLoading();
+            const searchRegion = e.target.classList[1];
             const findRegion = countries.filter((region, regionKey) => {
                const matchRegion = region.region.toLowerCase();
                return matchRegion.includes(searchRegion);
             });
 
-            createPagination(findRegion, 0);
+            setTimeout(() => {
+               createPagination(findRegion, 0);
+            }, 300);
          }
 
          if (item.classList.contains("border_name")) {
+            getCardContainer().innerHTML = getLoading();
             const result = findCountry(allCountrydata, item.textContent.toLowerCase());
 
-            insertSingleCard(result[0]);
+            setTimeout(() => {
+               insertSingleCard(result[0]);
+            }, 300);
          }
 
          if (item.classList.contains("back_btn_container")) {
-            createPagination(allCountrydata, 0);
-            getBackBtn("none");
-            getSearchContainer("flex");
-            getFilterRegion("flex");
+            getCardContainer().innerHTML = getLoading();
+
+            setTimeout(() => {
+               insertMultipleCards(allCountrydata, 32);
+            }, 300);
+
+            getBackBtn("hide");
+            getSearchContainer("show");
+            getFilterRegion("show");
             getSearch().value = "";
          }
       });
@@ -168,9 +185,9 @@ const imListening = (countries, eachItem) => {
 
 /* function that display multiple card */
 const insertMultipleCards = (countries, numOfCards) => {
-   getCardContainer().innerHTML = getLoading();
    /* call getPageContainer to empty */
    getCardContainer().innerHTML = "";
+
    const insertCard = [];
 
    for (let i = 0; i < numOfCards; i++) {
@@ -199,7 +216,7 @@ const insertMultipleCards = (countries, numOfCards) => {
       getCardContainer().innerHTML += insertCard[i];
    }
 
-   getPaginationContainer("block");
+   getPaginationContainer("show");
    /* call function for clickable purposes */
    imListening(countries, getCards());
 };
@@ -232,17 +249,17 @@ const altName = (border) => {
    return altNameBorders;
 };
 
+/* getting currency */
+const getCurrency = (currency) => {
+   if (!currency.currencies) {
+      return;
+   }
+
+   return Object.values(currency.currencies);
+};
+
 /* function that display single click card */
 const insertSingleCard = (country) => {
-   /* getting currency */
-   const getCurrency = (currency) => {
-      if (!currency.currencies) {
-         return;
-      }
-
-      return Object.values(country.currencies);
-   };
-
    const flag = Object.values(country.flags);
    const nativeName = Object.values(country.name);
    const currency = getCurrency(country);
@@ -296,12 +313,12 @@ const insertSingleCard = (country) => {
    getBorderCountries(country);
 
    /* show/hide purposes */
-   getSearchContainer("none");
-   getPaginationContainer("none");
-   getFilterRegion("none");
+   getSearchContainer("hide");
+   getPaginationContainer("hide");
+   getFilterRegion("hide");
 
    /* back button listening */
-   imListening(country, [getBackBtn("block")]);
+   imListening(country, [getBackBtn("show")]);
 };
 
 const getSearchCountry = (countries) => {
@@ -314,14 +331,25 @@ const getSearchCountry = (countries) => {
       }
 
       if (e.key === "Enter") {
-         getPageContainer().innerHTML = "";
          const result = findCountry(countries, searchCountry);
+         getCardContainer().innerHTML = getLoading();
 
          if (result.length > 0) {
-            insertMultipleCards(result, result.length);
+            getPaginationContainer("hide");
+
+            setTimeout(() => {
+               createPagination(result, 0);
+            }, 300);
          } else {
-            getCardContainer().innerHTML = `The Country Name "${searchCountry}" cannot be found. try again!`;
-            getCardContainer().style.fontSize = "3rem";
+            getPaginationContainer("hide");
+
+            setTimeout(() => {
+               getCardContainer().innerHTML = `<div class="not_found">
+                                             <p>"The Country Name</p>
+                                             <p ><span class="no_result">"${searchCountry}"</span> cannot be found.</p>
+                                             <p>try again!"</p>
+                                          </div>`;
+            }, 300);
          }
       }
    });
@@ -361,6 +389,11 @@ const getAllCountryData = async () => {
       allCountrydata = sorted;
    } catch (error) {
       console.log("Error", error);
+      getCardContainer().innerHTML = `<div class="not_found">
+                                             <p>"Data does't load..</p>
+                                             <p> <span class="no_result">"${error}" </span></p>
+                                             <p>try again!"</p>
+                                          </div>`;
    }
 };
 getAllCountryData();

@@ -282,6 +282,8 @@ body.dark_mode.active {
 .dropdown li a {
    text-decoration: none;
    color: var(--very-dark-blue-text);
+   width: 100%;
+   pointer-events: none;
 }
 
 .dropdown li a.dark_mode.active {
@@ -307,18 +309,20 @@ body.dark_mode.active {
    display: flex;
    flex-direction: column;
    align-items: center;
-   /* justify-content: center; */
    flex-wrap: wrap;
    gap: 3rem;
    width: 100%;
    padding-top: 3rem;
 }
 
-.loading {
-   visibility: hidden;
-   position: absolute;
-   width: 100%;
-   min-height: 50vh;
+.not_found {
+   text-align: center;
+   font-size: 3rem;
+   min-height: 55vh;
+}
+
+.no_result {
+   color: red;
 }
 
 .loading {
@@ -326,10 +330,11 @@ body.dark_mode.active {
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   visibility: visible;
    gap: 1rem;
    position: unset;
    font-size: 2.5rem;
+   width: 100%;
+   min-height: 55vh;
 }
 
 @media (min-width: 768px) {
