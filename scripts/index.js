@@ -83,6 +83,11 @@ const getFilterRegion = (show) => {
    return document.querySelector(".filter_region_container");
 };
 
+/* filter region checkbox */
+const getCheckbox = () => {
+   return document.getElementById("checkbox");
+};
+
 const getDropdowns = () => {
    return document.querySelectorAll(".dropdown li");
 };
@@ -147,6 +152,7 @@ const imListening = (countries, eachItem) => {
 
          if (item.classList.contains("dropdown_menu")) {
             getCardContainer().innerHTML = getLoading();
+            getCheckbox().checked = false;
             const searchRegion = e.target.classList[1];
             const findRegion = countries.filter((region, regionKey) => {
                const matchRegion = region.region.toLowerCase();
