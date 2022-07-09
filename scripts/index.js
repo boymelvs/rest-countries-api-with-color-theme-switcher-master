@@ -10,15 +10,20 @@ const getAllDarkModes = () => {
    return document.querySelectorAll(".dark_mode");
 };
 
-getTheme().addEventListener("click", () => {
-   getAllDarkModes().forEach((darkMode) => {
-      darkMode.classList.toggle("active");
-   });
-});
-
 const getThemeCheckbox = () => {
    return document.querySelector(".theme_checkbox");
 };
+
+getTheme().addEventListener("click", () => {
+   getAllDarkModes().forEach((darkMode) => {
+      if (!getThemeCheckbox().checked) {
+         darkMode.classList.add("active");
+         return;
+      }
+
+      darkMode.classList.remove("active");
+   });
+});
 
 /* show spinner while getting data */
 const getLoading = () => {
@@ -375,8 +380,8 @@ const findCountry = (countries, name) => {
 
 /* function that get all data  */
 let allCountrydata;
-const getUrl = "https://restcountries.com/v3.1/all";
-// const getUrl = "../data/data.json";
+// const getUrl = "https://restcountries.com/v3.1/all";
+const getUrl = "../data/data.json";
 const getAllCountryData = async () => {
    getCardContainer().innerHTML = getLoading();
    getTheme("hide");
