@@ -97,14 +97,13 @@ const getDropdowns = () => {
 
 /* function that create per page btn */
 const createPagination = (countries, numPages) => {
-   /* call getPageContainer to empty */
-   getPageContainer().innerHTML = "";
    /*  32 card to display */
    const numCardsperPage = 32; /* initial */
+
    /* count of clickable btn page */
    const numBtnsPage = Math.ceil(countries.length / numCardsperPage);
-   const pages = [];
    let listCountry;
+   let pages = "";
 
    for (let i = 0; i < numBtnsPage; i++) {
       /* when btnsPage click insert active_page class */
@@ -124,11 +123,12 @@ const createPagination = (countries, numPages) => {
          insertMultipleCards(listCountry, insertNumCards);
       }
 
-      pages.push(`<li class="${active} page dark_mode ${getThemeCheckbox().checked && "active"}">${i + 1}</li>`);
-
-      /* display the page btn */
-      getPageContainer().innerHTML += pages[i];
+      pages += `<li class="${active} page dark_mode ${getThemeCheckbox().checked && "active"}">${i + 1}</li>`;
    }
+
+   /* display the page btn */
+   getPageContainer().innerHTML = pages;
+
    /* call function for clickable purposes */
    imListening(countries, getPages());
 };
@@ -194,15 +194,12 @@ const imListening = (countries, eachItem) => {
 
 /* function that display multiple card */
 const insertMultipleCards = (countries, numOfCards) => {
-   /* call getPageContainer to empty */
-   getCardContainer().innerHTML = "";
-
-   const insertCard = [];
+   let insertCard = "";
 
    for (let i = 0; i < numOfCards; i++) {
       const flag = Object.values(countries[i].flags);
 
-      insertCard.push(`<div class="card dark_mode ${getThemeCheckbox().checked && "active"}">
+      insertCard += `<div class="card dark_mode ${getThemeCheckbox().checked && "active"}">
       
                            <div class="flag"><img src="${flag[0]}" alt="${countries[i].name.common} flag" class="country_flag_img" /></div>
 
@@ -220,12 +217,12 @@ const insertMultipleCards = (countries, numOfCards) => {
                                  <span class="capital_name">${!countries[i].capital ? "" : countries[i].capital}</span>
                               </div>
                            </div>
-                        </div>`);
-
-      getCardContainer().innerHTML += insertCard[i];
+                        </div>`;
    }
 
+   getCardContainer().innerHTML = insertCard;
    getPaginationContainer("show");
+
    /* call function for clickable purposes */
    imListening(countries, getCards());
 };
