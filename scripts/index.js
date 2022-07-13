@@ -380,8 +380,8 @@ const findCountry = (countries, name) => {
 
 /* function that get all data  */
 let allCountrydata;
-// const getUrl = "https://restcountries.com/v3.1/all";
-const getUrl = "../data/data.json";
+const getUrl = "https://restcountries.com/v3.1/all";
+// const getUrl = "../data/data.json";
 const getAllCountryData = async () => {
    getCardContainer().innerHTML = getLoading();
    getTheme("hide");
