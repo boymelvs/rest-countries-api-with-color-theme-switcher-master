@@ -142,24 +142,21 @@ const createPagination = (countries, numPages) => {
 const imListening = (countries, eachItem) => {
    eachItem.forEach((item, countryKey) => {
       item.addEventListener("click", (e) => {
-         if (item.classList.contains("page")) {
-            getCardContainer().innerHTML = getLoading();
+         getCardContainer().innerHTML = getLoading();
 
+         if (item.classList.contains("page")) {
             setTimeout(() => {
                createPagination(countries, countryKey);
             }, 300);
          }
 
          if (item.classList.contains("card")) {
-            getCardContainer().innerHTML = getLoading();
-
             setTimeout(() => {
                insertSingleCard(countries[countryKey]);
             }, 300);
          }
 
          if (item.classList.contains("dropdown_menu")) {
-            getCardContainer().innerHTML = getLoading();
             getCheckbox().checked = false;
             const searchRegion = e.target.classList[1];
             const findRegion = countries.filter((region, regionKey) => {
@@ -173,7 +170,6 @@ const imListening = (countries, eachItem) => {
          }
 
          if (item.classList.contains("border_name")) {
-            getCardContainer().innerHTML = getLoading();
             const result = findCountry(allCountrydata, item.textContent.toLowerCase());
 
             setTimeout(() => {
@@ -182,11 +178,9 @@ const imListening = (countries, eachItem) => {
          }
 
          if (item.classList.contains("back_btn_container")) {
-            getCardContainer().innerHTML = getLoading();
-
             setTimeout(() => {
                createPagination(allCountrydata, 0);
-            }, 700);
+            }, 300);
 
             getBackBtn("hide");
             getSearchContainer("show");
